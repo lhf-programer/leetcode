@@ -20,19 +20,36 @@ public class ThreeSumClosest {
         }
 
         Arrays.sort(nums);
-        int n = nums[0] + nums[1] + nums[2];
+        int n = 100000000;
         for (int i = 0; i < nums.length; i++) {
             if (i == 0 || nums[i] != nums[i - 1]) {
-                for (int j = i + 1; j < nums.length; j++) {
-                    if (j == i + 1 || nums[j] != nums[j - 1]) {
-                        for (int k = j + 1; k < nums.length; k++) {
-                            if (k == j + 1 || nums[k] != nums[k - 1]) {
-                                if (Math.abs(target - n) > Math.abs(target - (nums[i] + nums[j] + nums[k]))) {
-                                    n = nums[i] + nums[j] + nums[k];
-                                }
-                            }
-                        }
+                int j = i + 1;
+                int k = nums.length - 1;
+
+                while (j < k) {
+                    int sum = nums[i] + nums[j] + nums[k];
+                    if (sum == target) {
+                        return target;
                     }
+
+                    if (Math.abs(target - n) > Math.abs(target - sum)) {
+                        n = sum;
+                    }
+
+                    if (sum > target) {
+                        int k0 = k;
+                        while (k0 > j && nums[k] == nums[k0]) {
+                            k0--;
+                        }
+                        k = k0;
+                    } else {
+                        int j0 = j;
+                        while (j0 < k && nums[j] == nums[j0]) {
+                            j0++;
+                        }
+                        j = j0;
+                    }
+
                 }
             }
         }
