@@ -12,11 +12,12 @@ public class SwapPairs {
     public static void main(String[] args) {
         int[] list = {1, 2, 3, 4};
         ListNode listNode = LinkListUtil.arrayToLinkList(list);
-        ListNode node = swapPairs(listNode);
+        ListNode node = swapPairs2(listNode);
         LinkListUtil.printLinkList(node);
     }
 
     /**
+     * 递归
      * 交换思维
      *
      * 程序结束点: 节点为空 或 节点的下个节点为空（一个节点没有必要交换了）
@@ -44,5 +45,28 @@ public class SwapPairs {
         newNode.next = head;
 
         return newNode;
+    }
+
+    /**
+     * 迭代
+     * @param head
+     * @return
+     */
+    public static ListNode swapPairs2(ListNode head) {
+        ListNode node = new ListNode(0, head);
+        ListNode temp = node;
+
+        while (temp.next != null && temp.next.next != null) {
+            ListNode l1 = temp.next;
+            ListNode l2 = temp.next.next;
+
+            temp.next = l2;
+            l1.next = l2.next;
+            l2.next = l1;
+
+            temp = l1;
+        }
+
+        return node.next;
     }
 }
