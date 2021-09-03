@@ -9,6 +9,10 @@ import java.util.Stack;
  */
 public class LinkListUtil {
     public static ListNode arrayToLinkList(int[] nums) {
+        if (null == nums || nums.length == 0) {
+            return null;
+        }
+
         ListNode listNode = new ListNode(nums[0]);
         ListNode temp = listNode;
         for (int i = 1; i < nums.length; i++) {
@@ -19,6 +23,10 @@ public class LinkListUtil {
     }
 
     public static void printLinkList(ListNode listNode) {
+        if (null == listNode) {
+            return;
+        }
+
         ListNode temp = listNode;
 
         while (temp.next != null) {
