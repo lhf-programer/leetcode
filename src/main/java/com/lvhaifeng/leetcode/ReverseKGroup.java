@@ -18,28 +18,34 @@ public class ReverseKGroup {
 
     public static ListNode reverseKGroup(ListNode head, int k) {
         int length = LinkListUtil.length(head);
-        ListNode node = new ListNode(0, head);
-
-        ListNode temp = node;
-        for (int i = 0; i < length / k; i++) {
-            temp = swapPairs(temp.next, k);
-        }
-
-        return node.next;
+        return swapPairs(head, length, k);
     }
 
-    public static ListNode swapPairs(ListNode head, int k) {
+    /**
+     * 与两个节点交换的区别在于
+     * 你需要记录第一个节点的指向（该方法的 pre）
+     *
+     * @param head
+     * @param length
+     * @param k
+     * @return
+     */
+    public static ListNode swapPairs(ListNode head, int length, int k) {
+        if (length / k == 0) {
+            return head;
+        }
+        ListNode pre = head;
+
         ListNode next;
         ListNode newNode = new ListNode(0);
-        ListNode temp = head;
         for (int i = 0; i < k; i++) {
-            next = temp.next;
-            temp.next = newNode.next;
-            newNode.next = temp;
-            temp = next;
+            next = head.next;
+            head.next = newNode.next;
+            newNode.next = head;
+            head = next;
         }
+        pre.next = swapPairs(head, length - k, k);
 
-        head = newNode.next;
-        return head;
+        return newNode.next;
     }
 }
